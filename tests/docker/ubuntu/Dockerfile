@@ -16,6 +16,6 @@ USER docker
 SHELL ["/bin/bash", "-c"]
 
 # To test script
-ENTRYPOINT ["/bin/bash", "-c", "echo Test"]
+# ENTRYPOINT ["/bin/bash", "-c", "echo Test"]
 # To get into it
 # CMD ["/bin/bash"]
