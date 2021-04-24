@@ -9,12 +9,13 @@ usage(){
   echo "  [-nv | --no_vim]: Don't install vim"
   echo "  [-nt | --no_tmux]: Don't install tmux"
   echo "  [-ng | --no_git]: Don't install git"
-  echo "  [nte | --no_terminal]: Don't setup the terminal with zsh and its trimmings"
+  echo "  [-nte | --no_terminal]: Don't setup the terminal with zsh and its trimmings"
   echo "  [-nz | --no_zsh]: Don't install zsh"
   echo "  [-nomz | --no_ohmyzsh]: Don't install oh-my-zsh"
   echo "  [-npow | --no_powerlevel10k]: Don't install powerlevel10k theme"
   echo "  [-npy | --no_python]: Don't install python (using pyenv)"
   echo "  [-npg | --no_postgres]: Don't install postgresql"
+  echo "  [-ncus | --no_custom]: Don't install custom commands"
   echo "  [-h | --help]: This usage page"
 }
 
@@ -85,6 +86,10 @@ install_powerlevel10k(){
   sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   cp ~/.zshrc ~/.zshrc_setup_dev_env_backup
   cp -f zshrc.template ~/.zshrc
+  # If we are installing custom commands
+  if [[ $# -eq 1 ]]; then
+    printf "\n#setup_dev_env custom commands\nsource \$HOME/bin/%s_dev_env_commands.sh" $1 >> ~/.zshrc
+  fi
   sed -i 's@<HOME>@'$HOME'@' ~/.zshrc
   cp -f p10k.zsh.template ~/.p10k.zsh
   echo "SETUP SCRIPT: Installing powerlevel10k...COMPLETE!"
@@ -107,6 +112,15 @@ install_postgres(){
   echo "SETUP SCRIPT: Installing Postgresql...COMPLETE!"
 }
 
+install_commands(){
+  com_prefix=$1
+  echo "SETUP SCRIPT: Installing Custom Commands..."
+  mkdir -p ~/bin
+  cp -f _prefix_dev_env_commands.sh ~/bin/${com_prefix}_dev_env_commands.sh
+  sed -i 's@_prefix@'${com_prefix}'@' ~/bin/${com_prefix}_dev_env_commands.sh
+  echo "SETUP SCRIPT: Installing Custom Commands...COMPLETE!"
+}
+
 do_prereq=true
 do_update=true
 do_docker=true
@@ -120,6 +134,7 @@ do_ohmyzsh=true
 do_powerlevel10k=true
 do_python=true
 do_postgres=true
+do_commands=true
 
 # Parse command line args
 while [ "$1" != "" ]; do
@@ -163,6 +178,9 @@ while [ "$1" != "" ]; do
     -npg | --no_postgres )
       do_postgres=false
       ;;
+    -ncus | --no_custom)
+      do_commands=false
+      ;;
     -h | --help )
       usage
       exit 0
@@ -174,6 +192,13 @@ while [ "$1" != "" ]; do
   esac
   shift
 done
+
+if [ "$do_commands" = "true" ]
+then
+  echo "What is the prefix you would like for your dev env commands? (Will be <prefix>_<command_name>)."
+  read prefix
+  echo "$prefix set"
+fi
 
 sudo apt update
 
@@ -225,7 +250,12 @@ then
 
   if [ "$do_powerlevel10k" = "true" ]
   then
-    install_powerlevel10k
+    if [ "$do_commands" = "true" ]
+    then
+      install_powerlevel10k $prefix
+    else
+      install_powerlevel10k
+    fi
   fi
 fi
 
@@ -237,6 +267,11 @@ fi
 if [ "$do_postgres" = "true" ]
 then
   install_postgres
+fi
+
+if [ "$do_commands" = "true" ]
+then
+  install_commands $prefix
 fi
 
 echo "                   SETUP SCRIPT COMPLETE"
