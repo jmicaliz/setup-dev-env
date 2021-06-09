@@ -96,11 +96,15 @@ install_powerlevel10k(){
 }
 
 install_python(){
-  echo "SETUP SCRIPT: Installing Python (with pyenv)..."
+  echo "SETUP SCRIPT: Installing Python (with pyenv, poetry)..."
   sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+  # pyenv
   curl https://pyenv.run | bash
+  # poetry
+  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+  # HERE --no-modify-path to installer
   # might need to do this: exec bash
-  echo "SETUP SCRIPT: Installing Python (with pyenv)...COMPLETE!"
+  echo "SETUP SCRIPT: Installing Python (with pyenv, poetry)...COMPLETE!"
 }
 
 install_postgres(){
