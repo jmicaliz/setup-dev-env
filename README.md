@@ -15,6 +15,7 @@ If you want to install the custom commands in `./src/_prefix_dev_env_commands.sh
 - Complete setting up automatic testing to ensure that everything is working correctly.
 - Support other operating systems.
 - To add:
+  - [homebrew](https://brew.sh/)
   - poetry
   - [fzf](https://github.com/junegunn/fzf#using-homebrew)
   - [ripgrep](https://github.com/BurntSushi/ripgrep)
