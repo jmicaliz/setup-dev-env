@@ -14,6 +14,11 @@ If you want to install the custom commands in `./src/_prefix_dev_env_commands.sh
 ## Todo
 - Complete setting up automatic testing to ensure that everything is working correctly.
 - Support other operating systems.
+- To add:
+  - poetry
+  - [fzf](https://github.com/junegunn/fzf#using-homebrew)
+  - [ripgrep](https://github.com/BurntSushi/ripgrep)
+  - [bat](https://github.com/sharkdp/bat)
 
 ## License
 [GNU v3](LICENSE)
