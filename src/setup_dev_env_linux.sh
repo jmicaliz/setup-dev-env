@@ -76,8 +76,8 @@ install_zsh(){
 
 install_oh_my_zsh(){
   echo "SETUP SCRIPT: Installing oh-my-zsh..."
-  sudo sudo apt-get install -y curl git zsh
-  sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended" 
+  sudo apt-get install -y curl git zsh
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended" 
   echo "SETUP SCRIPT: Installing oh-my-zsh...COMPLETE!"
 }
 
