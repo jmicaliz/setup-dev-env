@@ -64,35 +64,29 @@ install_zsh(){
 
 install_oh_my_zsh(){
   echo "SETUP SCRIPT: Installing oh-my-zsh..."
-  sudo sudo apt-get install -y curl git zsh
+  sudo pacman -Syu --noconfirm curl
+  sudo pacman -Syu --noconfirm git
+  sudo pacman -Syu --noconfirm zsh
   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended" 
   echo "SETUP SCRIPT: Installing oh-my-zsh...COMPLETE!"
 }
 
 install_powerlevel10k(){
   echo "SETUP SCRIPT: Installing powerlevel10k..."
-  sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-  cp ~/.zshrc ~/.zshrc_setup_dev_env_backup
-  cp -f zshrc.template ~/.zshrc
-  sed -i 's@<HOME>@'$HOME'@' ~/.zshrc
-  cp -f p10k.zsh.template ~/.p10k.zsh
+  sudo pacman -Syu --noconfirm zsh-theme-powerlevel10k
   echo "SETUP SCRIPT: Installing powerlevel10k...COMPLETE!"
 }
 
 install_python(){
   echo "SETUP SCRIPT: Installing Python (with pyenv)..."
-  sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-  curl https://pyenv.run | bash
+  sudo pacman -Syu --noconfirm python
   # might need to do this: exec bash
   echo "SETUP SCRIPT: Installing Python (with pyenv)...COMPLETE!"
 }
 
 install_postgres(){
   echo "SETUP SCRIPT: Installing Postgresql..."
-  sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-  wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-  sudo apt-get update
-  sudo apt-get install postgresql
+  sudo pacman -Syu --noconfirm postgresql
   echo "SETUP SCRIPT: Installing Postgresql...COMPLETE!"
 }
 
