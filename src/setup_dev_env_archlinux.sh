@@ -57,6 +57,7 @@ install_git(){
 install_zsh(){
   echo "SETUP SCRIPT: Installing zsh..."
   sudo pacman -Syu --noconfirm zsh
+  sudo pacman -Syu --noconfirm which
   sudo chsh -s $(which zsh)
   echo "SETUP SCRIPT: Installing zsh...COMPLETE!"
 }
