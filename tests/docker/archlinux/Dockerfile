@@ -1,6 +1,11 @@
 FROM archlinux:base
 
+RUN pacman -Syu --noconfirm sudo && \
+    pacman -Syu --noconfirm vi
+
 RUN useradd -m docker && echo "docker:docker" | chpasswd
+
+RUN echo "docker ALL=(ALL)       ALL" >> /etc/sudoers.d/dockeruser
 
 WORKDIR /home/docker
 
